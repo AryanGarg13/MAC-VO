@@ -29,12 +29,14 @@ class KITTI_StereoSequence(SequenceBase[StereoFrame]):
         self.root = Path(cfg.root)
         self.sequence_name = self.root.name
         
-        self.imageL = KITTIMonocularDataset(Path(self.root, "image_2"))
-        self.imageR = KITTIMonocularDataset(Path(self.root, "image_3"))
+        self.imageL = KITTIMonocularDataset(Path(self.root, "image_02/data"))
+        self.imageR = KITTIMonocularDataset(Path(self.root, "image_03/data"))
         assert len(self.imageL) == len(self.imageR)
 
         if cfg.gt_pose:
-            self.gtPose_data = loadKITTIGTPoses(Path(self.root.parent.parent, "poses", self.sequence_name + ".txt"))
+            # self.gtPose_data = loadKITTIGTPoses(Path(self.root.parent.parent, "poses", self.sequence_name + ".txt"))
+            self.gtPose_data = loadKITTIGTPoses(Path(self.root, "poses_3x4.txt"))
+            
         else:
             self.gtPose_data = None
         
